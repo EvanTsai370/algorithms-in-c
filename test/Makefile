@@ -3,12 +3,33 @@ CFLAGS = -Wall -Werror -g -DUNITY_INCLUDE_DOUBLE
 ALGORITHMS_PATH := ../src
 UNITY_PATH := unity
 
-objects := bag_test queue_test stack_test
+objects := bag_test queue_test stack_test graph_test dfs_test \
+					 dfs_paths_test
 
 all: $(objects)
 	@echo Executing tests
 	$(foreach obj, $(objects), ./$(obj);)
-	make clean
+
+dfs_paths_test: lib.o dfs_paths_test.o graph.o unity.o bag.o stack.o dfs_paths.o
+	@echo Compiling dfs_paths_test
+	$(CC) $(CFLAGS) $^ -o $@
+
+dfs_paths.o: ${ALGORITHMS_PATH}/graphs/undirected/dfs_paths.c
+	$(CC) -c $(CFLAGS) $^ -o $@
+
+dfs_test: lib.o dfs_test.o graph.o unity.o bag.o dfs.o
+	@echo Compiling dfs_test
+	$(CC) $(CFLAGS) $^ -o $@
+
+dfs.o: ${ALGORITHMS_PATH}/graphs/undirected/dfs.c
+	$(CC) -c $(CFLAGS) $^ -o $@
+
+graph_test: lib.o graph_test.o graph.o unity.o bag.o
+	@echo Compiling graph_test
+	$(CC) $(CFLAGS) $^ -o $@
+
+graph.o: $(ALGORITHMS_PATH)/graphs/undirected/graph.c
+	$(CC) -c $(CFLAGS) $^ -o $@
 
 stack_test: lib.o stack_test.o stack.o unity.o
 	@echo Compiling stack_test

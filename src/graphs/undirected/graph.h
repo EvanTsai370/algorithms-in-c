@@ -17,6 +17,8 @@ bool graph_add_edge(graph_t *g, int v, int w);
 
 bool graph_adj_iter_init(graph_t *g, int v);
 
+bool graph_adj_iter_has_next(graph_t *g, int v);
+
 bool graph_adj_iter_next(graph_t *g, int v, int *w);
 
 void graph_print(graph_t *g);
