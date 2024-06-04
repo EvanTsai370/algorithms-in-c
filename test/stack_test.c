@@ -13,7 +13,7 @@ void tearDown() {}
 // Helper functions
 void fill_ints() {
   s = stack_init(sizeof(int));
-  for (int i = 0; i < NELEMS(values); i++) {
+  for (size_t i = 0; i < NELEMS(values); i++) {
     stack_push(s, &values[i]);
   }
 }
@@ -21,7 +21,7 @@ void fill_ints() {
 void fill_strs() {
   s = stack_init(sizeof(char *));
   char *str;
-  for (int i = 0; i < NELEMS(strs); i++) {
+  for (size_t i = 0; i < NELEMS(strs); i++) {
     str = strdup(strs[i]);
     stack_push(s, &str);
   }

@@ -5,7 +5,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
-#define NELEMS(a) sizeof(a) / sizeof(a[0])
+#define NELEMS(a) (sizeof(a) / sizeof(a[0]))
 
 #define BITS_PER_BYTE 8
 #define BYTES_PER_INT 4

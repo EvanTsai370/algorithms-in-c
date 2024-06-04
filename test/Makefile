@@ -1,14 +1,35 @@
 CC = gcc
-CFLAGS = -Wall -Werror -g -DUNITY_INCLUDE_DOUBLE
+CFLAGS = -Wall -Wextra -pedantic -Werror -g -DUNITY_INCLUDE_DOUBLE -fsanitize=address -fsanitize=undefined
 ALGORITHMS_PATH := ../src
 UNITY_PATH := unity
 
 objects := bag_test queue_test stack_test graph_test dfs_test \
-					 dfs_paths_test
+					 dfs_paths_test bfs_paths_test cc_test cycle_test
 
 all: $(objects)
 	@echo Executing tests
 	$(foreach obj, $(objects), ./$(obj);)
+
+cycle_test: cycle.o graph.o unity.o bag.o cycle_test.o stack.o
+	@echo Compiling cycle_test
+	$(CC) $(CFLAGS) $^ -o $@
+
+cycle.o: ${ALGORITHMS_PATH}/graphs/undirected/cycle.c
+	$(CC) -c $(CFLAGS) $^ -o $@
+
+cc_test: connected_components.o graph.o unity.o bag.o cc_test.o
+	@echo Compiling cc_test
+	$(CC) $(CFLAGS) $^ -o $@
+
+connected_components.o: ${ALGORITHMS_PATH}/graphs/undirected/connected_components.c
+	$(CC) -c $(CFLAGS) $^ -o $@
+
+bfs_paths_test: lib.o bfs_paths_test.o graph.o unity.o bag.o stack.o queue.o bfs_paths.o
+	@echo Compiling bfs_paths_test
+	$(CC) $(CFLAGS) $^ -o $@
+
+bfs_paths.o: ${ALGORITHMS_PATH}/graphs/undirected/bfs_paths.c
+	$(CC) -c $(CFLAGS) $^ -o $@
 
 dfs_paths_test: lib.o dfs_paths_test.o graph.o unity.o bag.o stack.o dfs_paths.o
 	@echo Compiling dfs_paths_test

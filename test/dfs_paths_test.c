@@ -2,9 +2,11 @@
 #include "unity/unity.h"
 #include "../src/graphs/undirected/dfs_paths.h"
 
+#define NUM_E 8
+
 static const int num_v = 6;
-static const int num_e = 8;
-static const int connections[num_e][2] = {{0, 5}, {2, 4}, {2, 3}, {1, 2}, \
+static const int num_e = NUM_E;
+static const int connections[NUM_E][2] = {{0, 5}, {2, 4}, {2, 3}, {1, 2}, \
                                           {0, 1}, {3, 4}, {3, 5}, {0, 2}};
 
 graph_t *g;
@@ -18,10 +20,10 @@ void setUp() {
 }
 
 void tearDown() {
-  graph_free(g);
   if (d) {
     dfs_paths_free(d);
   }
+  graph_free(g);
 }
 
 // Tests

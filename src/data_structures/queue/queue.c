@@ -41,6 +41,8 @@ void queue_enqueue(queue_t *q, void *item) {
     exit(EXIT_FAILURE);
   }
 
+  // 如果不设置为空，可能有脏数据，导致misaligned address
+  new_node->next = NULL;
   new_node->item = malloc(q->item_size);
   if (!new_node->item) {
     perror("Failed to malloc new item\n");
@@ -80,9 +82,13 @@ bool queue_dequeue(queue_t *q, void *item) {
   return true;
 }
 
-bool queue_is_empty(queue_t *q) { return (q->n == 0); }
+bool queue_is_empty(queue_t *q) { 
+  return (q->n == 0); 
+}
 
-unsigned int queue_size(queue_t *q) { return q->n; }
+unsigned int queue_size(queue_t *q) { 
+  return q->n; 
+}
 
 void queue_free(queue_t *q) {
   node_t *n = q->first;

@@ -2,6 +2,8 @@
 #include "unity/unity.h"
 #include <stdbool.h>
 
+#define NUM_E 13
+
 // Text file format:
 // num vertices
 // num edges
@@ -9,8 +11,8 @@
 static bool init_with_file = false;
 static char *filename = "data/tinyG.txt";
 static const int num_v = 13;
-static const int num_e = 13;
-static const int connections[num_e][2] = {
+static const int num_e = NUM_E;
+static const int connections[NUM_E][2] = {
     {0, 5},   {4, 3},  {0, 1}, {9, 12}, {6, 4},  {5, 4}, {0, 2},
     {11, 12}, {9, 10}, {0, 6}, {7, 8},  {9, 11}, {5, 3}};
 // static char *input = "13\n13\n0 5\n4 3\n0 1\n9 12\n6 4\n5 4\n0 2\n11 12\n9

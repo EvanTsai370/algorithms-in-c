@@ -94,7 +94,7 @@ uint32_t fnv_hash_32(void *input, size_t size) {
   uint32_t hash = FNV_BASIS_32;
   uint8_t *bytes = (uint8_t *)input;
 
-  for (int i = 0; i < size; i++) {
+  for (size_t i = 0; i < size; i++) {
     uint8_t byte = bytes[i];
     hash ^= byte;
     hash *= FNV_PRIME_32;
