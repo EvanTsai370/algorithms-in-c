@@ -2,7 +2,7 @@
 #include "connected_components.h"
 #include "graph.h"
 
-void dfs(cc_t *cc, int v);
+static void dfs(cc_t *cc, int v);
 
 typedef struct cc {
   graph_t *g;
@@ -53,7 +53,7 @@ cc_t *cc_init(graph_t *g) {
   return cc;
 }
 
-void dfs(cc_t *cc, int v) {
+static void dfs(cc_t *cc, int v) {
   cc->marked[v] = true;
   cc->id[v] = cc->count;
   cc->size[cc->count]++;

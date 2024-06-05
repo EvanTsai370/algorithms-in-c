@@ -31,6 +31,7 @@ void test_undirected_cycle_true() {
   printf("\n");
 
   cycle_free(c);
+  graph_free(g);
 }
 
 void test_undirected_cycle_false() {
@@ -42,6 +43,7 @@ void test_undirected_cycle_false() {
   cycle_t *c = cycle_init(g);
   TEST_ASSERT_FALSE(has_cycle(c));
   cycle_free(c);
+  graph_free(g);
 }
 
 // Main

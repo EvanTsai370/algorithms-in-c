@@ -4,11 +4,26 @@ ALGORITHMS_PATH := ../src
 UNITY_PATH := unity
 
 objects := bag_test queue_test stack_test graph_test dfs_test \
-					 dfs_paths_test bfs_paths_test cc_test cycle_test
+					 dfs_paths_test bfs_paths_test cc_test cycle_test bipartite_test \
+					 bipartite_x_test
 
 all: $(objects)
 	@echo Executing tests
 	$(foreach obj, $(objects), ./$(obj);)
+
+bipartite_x_test: bipartite_x_test.o bipartite_x.o graph.o unity.o bag.o stack.o queue.o
+	@echo Compiling bipartite_x_test
+	$(CC) $(CFLAGS) $^ -o $@
+
+bipartite_x.o: ${ALGORITHMS_PATH}/graphs/undirected/bipartite_x.c
+	$(CC) -c $(CFLAGS) $^ -o $@
+
+bipartite_test: bipartite_test.o bipartite.o graph.o unity.o bag.o stack.o
+	@echo Compiling bipartite_test
+	$(CC) $(CFLAGS) $^ -o $@
+
+bipartite.o: ${ALGORITHMS_PATH}/graphs/undirected/bipartite.c
+	$(CC) -c $(CFLAGS) $^ -o $@
 
 cycle_test: cycle.o graph.o unity.o bag.o cycle_test.o stack.o
 	@echo Compiling cycle_test

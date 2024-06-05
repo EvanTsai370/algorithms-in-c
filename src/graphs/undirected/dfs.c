@@ -3,8 +3,7 @@
 #include "dfs.h"
 #include "graph.h"
 
-
-void dfs(depth_first_search_t *d, int v);
+static void dfs(depth_first_search_t *d, int v);
 
 typedef struct depth_first_search {
   graph_t *g;
@@ -43,7 +42,7 @@ depth_first_search_t *depth_first_search_init(graph_t *g, int s) {
   return d;
 }
 
-void dfs(depth_first_search_t *d, int v) {
+static void dfs(depth_first_search_t *d, int v) {
   if (v < 0 || v >= graph_V(d->g)) {
     return;
   }

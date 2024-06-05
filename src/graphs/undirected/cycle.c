@@ -3,13 +3,13 @@
 #include "../../data_structures/stack/stack.h"
 #include "graph.h"
 
-void dfs(cycle_t *c, int from, int v);
+static void dfs(cycle_t *c, int from, int v);
 
 typedef struct cycle {
   graph_t *g;
   int *edge_to;
   bool *marked;
-  my_stack_t *stack;
+  my_stack_t *cycle;
 } cycle_t;
 
 cycle_t *cycle_init(graph_t *g) {
@@ -39,7 +39,7 @@ cycle_t *cycle_init(graph_t *g) {
     c->edge_to[i] = -1;
     c->marked[i] = false;
   }
-  c->stack = NULL;
+  c->cycle = NULL;
 
   for (int v = 0; v < graph_V(g); v++) {
     if (!c->marked[v]) {
@@ -50,13 +50,13 @@ cycle_t *cycle_init(graph_t *g) {
   return c;
 }
 
-void dfs(cycle_t *c, int from, int v) {
+static void dfs(cycle_t *c, int from, int v) {
   c->marked[v] = true;
 
   graph_adj_iter_init(c->g, v);
   while (graph_adj_iter_has_next(c->g, v)) {
     // if we've already found a cycle
-    if (c->stack) {
+    if (c->cycle) {
       return;
     }
 
@@ -66,43 +66,43 @@ void dfs(cycle_t *c, int from, int v) {
       c->edge_to[w] = v;
       dfs(c, v, w);
     } else if (from != w) {
-      c->stack = stack_init(sizeof(int));
+      c->cycle = stack_init(sizeof(int));
       int x;
       for (x = v; x != w; x = c->edge_to[x]) {
-        stack_push(c->stack, &x);
+        stack_push(c->cycle, &x);
       }
-      stack_push(c->stack, &w);
-      stack_push(c->stack, &v);
+      stack_push(c->cycle, &w);
+      stack_push(c->cycle, &v);
     }
   }
 }
 
 bool has_cycle(cycle_t *c) {
-  return (c->stack != NULL);
+  return (c->cycle != NULL);
 }
 
 bool cycle_iter_init(cycle_t *c) {
-  if (!c->stack) {
+  if (!c->cycle) {
     return false;
   }
-  stack_iter_init(c->stack);
+  stack_iter_init(c->cycle);
   return true;
 }
 
 bool cycle_iter_has_next(cycle_t *c) {
-  return stack_iter_has_next(c->stack);
+  return stack_iter_has_next(c->cycle);
 }
 
 bool cycle_iter_next(cycle_t *c, int *v) {
-  stack_iter_next(c->stack, v);
+  stack_iter_next(c->cycle, v);
   return true;
 }
 
 void cycle_free(cycle_t *c) {
   free(c->marked);
   free(c->edge_to);
-  if (c->stack) {
-    stack_free(c->stack);
+  if (c->cycle) {
+    stack_free(c->cycle);
   }
   free(c);
 }

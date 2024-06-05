@@ -6,7 +6,7 @@
 #include "dfs_paths.h"
 #include "../../data_structures/stack/stack.h"
 
-void dfs(dfs_paths_t *d, int v);
+static void dfs(dfs_paths_t *d, int v);
 
 typedef struct dfs_paths {
   graph_t *g;
@@ -61,7 +61,7 @@ dfs_paths_t *dfs_paths_init(graph_t *g, int s) {
   return d;
 }
 
-void dfs(dfs_paths_t *d, int v) {
+static void dfs(dfs_paths_t *d, int v) {
   if (v < 0 || v >= graph_V(d->g)) {
     return;
   }

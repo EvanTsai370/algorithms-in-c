@@ -7,7 +7,7 @@
 #include "../../data_structures/stack/stack.h"
 #include "../../data_structures/queue/queue.h"
 
-void bfs(bfs_paths_t *b, int v);
+static void bfs(bfs_paths_t *b, int v);
 
 typedef struct bfs_paths {
   graph_t *g;
@@ -72,7 +72,7 @@ bfs_paths_t *bfs_paths_init(graph_t *g, int s) {
   return b;
 }
 
-void bfs(bfs_paths_t *b, int s) {
+static void bfs(bfs_paths_t *b, int s) {
   b->dist_to[s] = 0;
   b->marked[s] = true;
 
